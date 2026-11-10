@@ -1,0 +1,6 @@
+IAH→DEN ene 17:00 despejado              14.3%
+IAH→DEN ene 17:00 nieve en origen        100.0%
+IAH→DEN ene 17:00 nieve en destino       67.5%
+IAH→ORD jul 17:00 tormenta en destino    71.2%
+ORD→DEN ene 17:00 despejado              12.5%
+ORD→DEN ene 17:00 nieve en origen        100.0%

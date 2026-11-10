@@ -1,0 +1,401 @@
+{
+  "resultados": {
+    "siempre_sin_retraso": {
+      "validacion": {
+        "AUC": 0.5,
+        "PR-AUC": 0.2645059923998831,
+        "precision": 0.0,
+        "recall": 0.0,
+        "F1": 0.0,
+        "umbral": 0.5,
+        "prob_media": 0.0,
+        "tasa_real": 0.2645059923998831,
+        "brier": 0.2645059923998831
+      },
+      "prueba": {
+        "AUC": 0.5,
+        "PR-AUC": 0.2834586533389362,
+        "precision": 0.0,
+        "recall": 0.0,
+        "F1": 0.0,
+        "umbral": 0.5,
+        "prob_media": 0.0,
+        "tasa_real": 0.2834586533389362,
+        "brier": 0.2834586533389362
+      }
+    },
+    "regresion_logistica": {
+      "parametros": {
+        "C": 0.1,
+        "class_weight": null
+      },
+      "cv_pr_auc": 0.40419519416704935,
+      "validacion": {
+        "AUC": 0.6739018467376817,
+        "PR-AUC": 0.42684618786064193,
+        "precision": 0.3688731682668014,
+        "recall": 0.66268032285438,
+        "F1": 0.47393565596618376,
+        "umbral": 0.198815804556792,
+        "prob_media": 0.21521771717988983,
+        "tasa_real": 0.2645059923998831,
+        "brier": 0.18285060747738635
+      },
+      "prueba": {
+        "AUC": 0.6737163464076298,
+        "PR-AUC": 0.4510220355076242,
+        "precision": 0.3413403655777232,
+        "recall": 0.8338931995962655,
+        "F1": 0.4843997279142151,
+        "umbral": 0.198815804556792,
+        "prob_media": 0.28468621300251373,
+        "tasa_real": 0.2834586533389362,
+        "brier": 0.187078426404673
+      }
+    },
+    "knn": {
+      "parametros": {
+        "n_neighbors": 301,
+        "weights": "distance"
+      },
+      "cv_pr_auc": 0.35610857723483497,
+      "validacion": {
+        "AUC": 0.6093104757068221,
+        "PR-AUC": 0.36646997039220086,
+        "precision": 0.2907855551088001,
+        "recall": 0.8420460600319697,
+        "F1": 0.4322881313003394,
+        "umbral": 0.16465944448844416,
+        "prob_media": 0.2061015442846661,
+        "tasa_real": 0.2645059923998831,
+        "brier": 0.19171646856076874
+      },
+      "prueba": {
+        "AUC": 0.6223350703029977,
+        "PR-AUC": 0.3992336274884096,
+        "precision": 0.29698300076470574,
+        "recall": 0.9462843805198082,
+        "F1": 0.4520835648614693,
+        "umbral": 0.16465944448844416,
+        "prob_media": 0.26126543774495775,
+        "tasa_real": 0.2834586533389362,
+        "brier": 0.1952671616543272
+      }
+    },
+    "random_forest": {
+      "parametros": {
+        "class_weight": null,
+        "max_depth": 20,
+        "n_estimators": 300
+      },
+      "cv_pr_auc": 0.3891905809092169,
+      "validacion": {
+        "AUC": 0.6600033327779071,
+        "PR-AUC": 0.41110070278659916,
+        "precision": 0.34140603376695267,
+        "recall": 0.7302705582854775,
+        "F1": 0.4652873389788952,
+        "umbral": 0.20353218028605852,
+        "prob_media": 0.22447849672098774,
+        "tasa_real": 0.2645059923998831,
+        "brier": 0.1860403716140367
+      },
+      "prueba": {
+        "AUC": 0.6645497948981259,
+        "PR-AUC": 0.44543283576942544,
+        "precision": 0.31881739675153253,
+        "recall": 0.8989717385818824,
+        "F1": 0.47070189925681255,
+        "umbral": 0.20353218028605852,
+        "prob_media": 0.27446866082306365,
+        "tasa_real": 0.2834586533389362,
+        "brier": 0.19010374077800407
+      }
+    },
+    "regresion_logistica_calibrada": {
+      "validacion": {
+        "AUC": 0.6860807735386156,
+        "PR-AUC": 0.440810120322355,
+        "precision": 0.3850479965391046,
+        "recall": 0.6498924476545695,
+        "F1": 0.48358296622613806,
+        "umbral": 0.2584853198674873,
+        "prob_media": 0.26450599253143453,
+        "tasa_real": 0.2645059923998831,
+        "brier": 0.17760297148975146
+      },
+      "prueba": {
+        "AUC": 0.6737163464076298,
+        "PR-AUC": 0.4510220355076242,
+        "precision": 0.36290041386838073,
+        "recall": 0.7550466818067121,
+        "F1": 0.4901962791935864,
+        "umbral": 0.2584853198674873,
+        "prob_media": 0.311500047507581,
+        "tasa_real": 0.2834586533389362,
+        "brier": 0.1879798014835116
+      }
+    }
+  },
+  "mejor": "regresion_logistica_calibrada",
+  "importancia": {
+    "salida_local": 0.09884,
+    "o_spc": 0.0346,
+    "o_temperature_2m": 0.03133,
+    "destino": 0.01942,
+    "o_weather_code": 0.01299,
+    "o_nws_inundacion": 0.00577,
+    "origen": 0.00525,
+    "aerolinea": 0.00504,
+    "d_weather_code": 0.00394,
+    "d_spc": 0.0034,
+    "d_temperature_2m": 0.0034,
+    "o_cloud_cover": 0.00117,
+    "o_wind_gusts_10m": 0.00102,
+    "d_wind_speed_10m": 0.00064,
+    "d_wind_gusts_10m": 0.00041,
+    "d_cloud_cover": 0.00041,
+    "o_cape": 0.00035,
+    "o_snowfall": 0.00027,
+    "o_nws_otro": 0.00025,
+    "d_nws_tropical": 8e-05,
+    "o_wind_speed_10m": 7e-05,
+    "d_nws_inundacion": 5e-05,
+    "d_precipitation": 4e-05,
+    "o_nws_tormenta": 0.0,
+    "d_nws_tormenta": 0.0,
+    "o_nws_invierno": 0.0,
+    "o_nws_tropical": 0.0,
+    "d_snowfall": -0.0,
+    "d_nws_otro": -9e-05,
+    "d_nws_invierno": -0.0001,
+    "o_precipitation": -0.0001,
+    "d_cape": -0.00011
+  },
+  "errores": {
+    "origen": [
+      {
+        "origen": "ORD",
+        "vuelos": 202706,
+        "tasa_real": 0.302,
+        "prob_media": 0.312,
+        "recall": 0.74,
+        "AUC": 0.673
+      },
+      {
+        "origen": "DFW",
+        "vuelos": 158713,
+        "tasa_real": 0.295,
+        "prob_media": 0.335,
+        "recall": 0.818,
+        "AUC": 0.668
+      },
+      {
+        "origen": "IAH",
+        "vuelos": 85969,
+        "tasa_real": 0.218,
+        "prob_media": 0.266,
+        "recall": 0.646,
+        "AUC": 0.666
+      }
+    ],
+    "aerolinea": [
+      {
+        "aerolinea": "AA",
+        "vuelos": 228656,
+        "tasa_real": 0.301,
+        "prob_media": 0.336,
+        "recall": 0.815,
+        "AUC": 0.672
+      },
+      {
+        "aerolinea": "UA",
+        "vuelos": 181035,
+        "tasa_real": 0.261,
+        "prob_media": 0.282,
+        "recall": 0.677,
+        "AUC": 0.675
+      },
+      {
+        "aerolinea": "DL",
+        "vuelos": 17123,
+        "tasa_real": 0.237,
+        "prob_media": 0.256,
+        "recall": 0.628,
+        "AUC": 0.683
+      },
+      {
+        "aerolinea": "F9",
+        "vuelos": 11353,
+        "tasa_real": 0.303,
+        "prob_media": 0.375,
+        "recall": 0.842,
+        "AUC": 0.632
+      },
+      {
+        "aerolinea": "AS",
+        "vuelos": 3901,
+        "tasa_real": 0.266,
+        "prob_media": 0.356,
+        "recall": 0.822,
+        "AUC": 0.653
+      },
+      {
+        "aerolinea": "NK",
+        "vuelos": 2430,
+        "tasa_real": 0.434,
+        "prob_media": 0.243,
+        "recall": 0.495,
+        "AUC": 0.644
+      },
+      {
+        "aerolinea": "B6",
+        "vuelos": 1651,
+        "tasa_real": 0.36,
+        "prob_media": 0.349,
+        "recall": 0.855,
+        "AUC": 0.706
+      },
+      {
+        "aerolinea": "WN",
+        "vuelos": 1239,
+        "tasa_real": 0.373,
+        "prob_media": 0.251,
+        "recall": 0.587,
+        "AUC": 0.709
+      }
+    ],
+    "destino": [
+      {
+        "destino": "LGA",
+        "vuelos": 10577,
+        "tasa_real": 0.343,
+        "prob_media": 0.328,
+        "recall": 0.793,
+        "AUC": 0.682
+      },
+      {
+        "destino": "LAX",
+        "vuelos": 9406,
+        "tasa_real": 0.257,
+        "prob_media": 0.279,
+        "recall": 0.729,
+        "AUC": 0.7
+      },
+      {
+        "destino": "ATL",
+        "vuelos": 9295,
+        "tasa_real": 0.286,
+        "prob_media": 0.281,
+        "recall": 0.686,
+        "AUC": 0.69
+      },
+      {
+        "destino": "DEN",
+        "vuelos": 8734,
+        "tasa_real": 0.265,
+        "prob_media": 0.306,
+        "recall": 0.804,
+        "AUC": 0.735
+      },
+      {
+        "destino": "SFO",
+        "vuelos": 7187,
+        "tasa_real": 0.386,
+        "prob_media": 0.319,
+        "recall": 0.772,
+        "AUC": 0.688
+      },
+      {
+        "destino": "MCO",
+        "vuelos": 7114,
+        "tasa_real": 0.318,
+        "prob_media": 0.33,
+        "recall": 0.791,
+        "AUC": 0.677
+      },
+      {
+        "destino": "BOS",
+        "vuelos": 7088,
+        "tasa_real": 0.317,
+        "prob_media": 0.342,
+        "recall": 0.851,
+        "AUC": 0.706
+      },
+      {
+        "destino": "PHX",
+        "vuelos": 7071,
+        "tasa_real": 0.279,
+        "prob_media": 0.295,
+        "recall": 0.721,
+        "AUC": 0.665
+      },
+      {
+        "destino": "SEA",
+        "vuelos": 6959,
+        "tasa_real": 0.292,
+        "prob_media": 0.322,
+        "recall": 0.796,
+        "AUC": 0.663
+      },
+      {
+        "destino": "DCA",
+        "vuelos": 6817,
+        "tasa_real": 0.298,
+        "prob_media": 0.317,
+        "recall": 0.764,
+        "AUC": 0.684
+      },
+      {
+        "destino": "ORD",
+        "vuelos": 6791,
+        "tasa_real": 0.311,
+        "prob_media": 0.322,
+        "recall": 0.795,
+        "AUC": 0.699
+      },
+      {
+        "destino": "LAS",
+        "vuelos": 6790,
+        "tasa_real": 0.297,
+        "prob_media": 0.297,
+        "recall": 0.764,
+        "AUC": 0.712
+      },
+      {
+        "destino": "DFW",
+        "vuelos": 6713,
+        "tasa_real": 0.299,
+        "prob_media": 0.326,
+        "recall": 0.78,
+        "AUC": 0.684
+      },
+      {
+        "destino": "EWR",
+        "vuelos": 6586,
+        "tasa_real": 0.276,
+        "prob_media": 0.356,
+        "recall": 0.882,
+        "AUC": 0.725
+      },
+      {
+        "destino": "DTW",
+        "vuelos": 6353,
+        "tasa_real": 0.259,
+        "prob_media": 0.284,
+        "recall": 0.694,
+        "AUC": 0.676
+      }
+    ]
+  },
+  "matriz_confusion": [
+    [
+      152472,
+      168100
+    ],
+    [
+      31064,
+      95752
+    ]
+  ]
+}
