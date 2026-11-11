@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: retrasos-vuelos
+    runtime: python
+    plan: free
+    buildCommand: pip install -r backend/requirements.txt && cd frontend && npm ci && npm run build
+    startCommand: cd backend && uvicorn api.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/salud
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.10
+      - key: NODE_VERSION
+        value: 24.14.0
+      - key: RAPIDAPI_KEY
+        sync: false
+      - key: AI_KEY
+        sync: false
+      - key: VITE_MAPBOX_TOKEN
+        sync: false
+      - key: VITE_MAPBOX_STYLE
+        sync: false

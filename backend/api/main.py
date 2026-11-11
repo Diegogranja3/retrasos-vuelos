@@ -291,3 +291,10 @@ def explicar(p: PeticionExplicacion):
     except (KeyError, TypeError):
         raise HTTPException(422, "vuelo incompleto: falta destino o probabilidad") from None
     return {"texto": texto, "modelo": modelo}
+
+
+# ---------- Frontend compilado (npm run build): mismo origen que la API, sin CORS en producción ----------
+_DIST = RAIZ.parent / "frontend" / "dist"
+if _DIST.exists():  # al final: las rutas /api/* ya están registradas y tienen prioridad
+    from fastapi.staticfiles import StaticFiles
+    app.mount("/", StaticFiles(directory=_DIST, html=True), name="frontend")

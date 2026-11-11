@@ -14,6 +14,7 @@ from src.features import CAT, NUM
 
 RAIZ = Path(__file__).resolve().parents[1]
 DATA = RAIZ.parent / "data"  # data/ vive fuera de backend/
+FONDO = RAIZ / "models" / "fondo.parquet"  # muestra del entrenamiento para el valor promedio
 MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre",
          "noviembre", "diciembre"]
 DIAS = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
@@ -65,9 +66,14 @@ def _calcular_fondo(bundle):
         return resto if tipo == "num" else next(c for c in cats if resto.startswith(c + "_"))
 
     grupos = np.array([grupo(n) for n in nombres])
-    df = pd.read_parquet(DATA / "processed" / "dataset.parquet", columns=[*bundle["entrada"]])
-    df = df[df["salida_local"] < pd.Timestamp(bundle["entrenado_hasta"])]
-    muestra = df.sample(min(N_FONDO, len(df)), random_state=42)
+    dataset = DATA / "processed" / "dataset.parquet"
+    if dataset.exists():  # local: muestra fresca, y se guarda para el deploy (data/ no se versiona)
+        df = pd.read_parquet(dataset, columns=[*bundle["entrada"]])
+        df = df[df["salida_local"] < pd.Timestamp(bundle["entrenado_hasta"])]
+        muestra = df.sample(min(N_FONDO, len(df)), random_state=42)
+        muestra.to_parquet(FONDO, index=False)
+    else:  # ponytail: en Render se usa la muestra versionada; si reentrenas, corre la API local una vez y haz commit
+        muestra = pd.read_parquet(FONDO)
     media = _denso(pipe[:-1].transform(muestra)).mean(axis=0)
     return grupos, pipe.named_steps["logisticregression"].coef_[0], media
 
