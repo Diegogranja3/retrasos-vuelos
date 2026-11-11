@@ -1,9 +1,10 @@
+# Versiones fijas: el modelo es un pickle de scikit-learn y airportsdata cambia códigos IATA entre versiones
 pandas==3.0.3
-pyarrow>=15
+pyarrow==25.0.1
 numpy==2.4.6
 scikit-learn==1.9.1
 matplotlib>=3.8
-airportsdata>=20240101
+airportsdata==20260905
 tzdata
-fastapi>=0.115
-uvicorn>=0.30
+fastapi==0.115.0
+uvicorn==0.54.0
