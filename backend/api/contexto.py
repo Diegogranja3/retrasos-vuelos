@@ -70,7 +70,7 @@ def _clima(codigos, inicio, fin):
              "start_date": inicio, "end_date": fin, "timezone": "GMT"}
         respaldo = False
         try:  # un intento corto: si Previous Runs se cuelga, se pasa rápido al respaldo
-            r = json.loads(leer_url(f"{URL_CLIMA}?{urllib.parse.urlencode(q)}", intentos=1, timeout=30))
+            r = json.loads(leer_url(f"{URL_CLIMA}?{urllib.parse.urlencode(q)}", intentos=1, timeout=10))
         except Exception:
             if all(ruta[c].exists() for c in lote):
                 continue  # se usa la copia vieja
@@ -132,9 +132,11 @@ def obtener(codigos, utc_min, utc_max):
                    (utc_max + pd.Timedelta(days=1)).date().isoformat())
     n0 = (min(hoy, utc_min.normalize()) - pd.Timedelta(days=3)).date().isoformat()
     n1 = (max(hoy, utc_max.normalize()) + pd.Timedelta(days=2)).date().isoformat()
-    with ThreadPoolExecutor(max_workers=8) as ex:  # el IEM tarda ~3 s por consulta
-        spc = list(ex.map(_spc, codigos))
-        nws = list(ex.map(lambda c: _nws(c, n0, n1), codigos))
+    # El IEM tarda ~2 s por consulta de SPC; 24 a la vez: 60 aeropuertos en ~9 s (con 8 eran ~16 s, con 48 no mejora)
+    with ThreadPoolExecutor(max_workers=24) as ex:
+        spc = ex.map(_spc, codigos)
+        nws = ex.map(lambda c: _nws(c, n0, n1), codigos)
+        spc, nws = list(spc), list(nws)
     spc = pd.concat(spc, ignore_index=True)
     for col in ("utc_issue", "utc_expire", "utc_product_issue"):
         spc[col] = pd.to_datetime(spc[col]).astype("datetime64[ns]")
