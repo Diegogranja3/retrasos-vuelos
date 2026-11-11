@@ -23,6 +23,8 @@ from src.features import ANTICIPACION, aeropuertos
 VIGENCIA = 3600
 LOTE_CLIMA = 50  # ubicaciones por llamada a Open-Meteo
 URL_CLIMA_RESPALDO = "https://api.open-meteo.com/v1/forecast"  # si Previous Runs no responde
+_PREVIOUS_CAIDO = [0.0]  # hasta cuándo (epoch) se salta Previous Runs tras un fallo
+PREVIOUS_ERROR = [None]  # último fallo de Previous Runs (se muestra en /api/salud)
 
 
 def leer_url(url, intentos=3, timeout=60):
@@ -70,8 +72,14 @@ def _clima(codigos, inicio, fin):
              "start_date": inicio, "end_date": fin, "timezone": "GMT"}
         respaldo = False
         try:  # un intento corto: si Previous Runs se cuelga, se pasa rápido al respaldo
+            if time.time() < _PREVIOUS_CAIDO[0]:
+                raise TimeoutError("Previous Runs falló hace poco; se usa el respaldo directo")
             r = json.loads(leer_url(f"{URL_CLIMA}?{urllib.parse.urlencode(q)}", intentos=1, timeout=10))
-        except Exception:
+        except Exception as e:
+            if time.time() >= _PREVIOUS_CAIDO[0]:  # fallo real, no el salto de arriba
+                print(f"Open-Meteo Previous Runs falló: {e!r}", flush=True)  # visible en los logs de Render
+                PREVIOUS_ERROR[0] = f"{time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())} {e!r}"[:300]
+                _PREVIOUS_CAIDO[0] = time.time() + 600  # 10 min sin reintentar: no esperar 10 s por cada lote
             if all(ruta[c].exists() for c in lote):
                 continue  # se usa la copia vieja
             # ponytail: respaldo = corrida actual de la API principal también para *_previous_day1.
@@ -146,10 +154,15 @@ def obtener(codigos, utc_min, utc_max):
     return clima, spc, nws[["aeropuerto", "phenomena", "significance", "name", "issue", "expire"]]
 
 
+_EVENTOS = {}  # id(nws) -> {aeropuerto: [(desde, expire, nombre)]}; se llama 2 veces por vuelo
+
+
 def avisos_vigentes(nws, aeropuerto, salida_utc):
     """Nombres de los avisos que cuentan con la MISMA regla que src.features._nws:
     emitidos >= 24 h antes de la salida y vigentes a la salida."""
-    e = nws[nws["aeropuerto"] == aeropuerto]
-    desde = e["issue"] + ANTICIPACION
-    ok = (desde < e["expire"]) & (desde <= salida_utc) & (salida_utc < e["expire"])
-    return sorted(set(e.loc[ok, "name"].dropna()))
+    if id(nws) not in _EVENTOS:
+        _EVENTOS.clear()
+        e = nws.dropna(subset=["name"]).assign(desde=nws["issue"] + ANTICIPACION)
+        e = e[e["desde"] < e["expire"]]
+        _EVENTOS[id(nws)] = {a: list(zip(g["desde"], g["expire"], g["name"])) for a, g in e.groupby("aeropuerto")}
+    return sorted({n for d, x, n in _EVENTOS[id(nws)].get(aeropuerto, ()) if d <= salida_utc < x})

@@ -188,6 +188,7 @@ def salud():
                    "entrenado_hasta": bundle and bundle["entrenado_hasta"],
                    "provisional": os.environ.get("MODELO_PROVISIONAL") == "1"},
         "aerodatabox": vuelos.unidades_restantes() or {"unidades": None, "visto": None},
+        "open_meteo_previous_error": contexto.PREVIOUS_ERROR[0],
         "cache": cache}
 
 
